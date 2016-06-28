@@ -1,7 +1,7 @@
 {
   "name": "es6-set-proptypes",
   "version": "1.0.0",
-  "description": "React PropTypes for ES6 Set interfaces",
+  "description": "React PropTypes for ES6 Sets and compatible interfaces",
   "main": "src/index.js",
   "scripts": {
     "test": "tape test | tap-spec"
