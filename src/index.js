@@ -27,9 +27,6 @@ function error(propName, componentName, property, condition) {
 
 module.exports = function (props, propName, componentName) {
   var s = props[propName];
-  if (s.length !== 0) {
-    return error(propName, componentName, 'length', 'equal to 0');
-  }
 
   if (typeof s.size !== 'number') {
     return error(propName, componentName, 'size', 'a number');
