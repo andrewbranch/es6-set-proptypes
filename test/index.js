@@ -2,6 +2,13 @@ var tape = require('tape');
 var ES6Set = require('es6-set');
 var Immutable = require('Immutable');
 var setValidator = require('../src/index');
+
+if (typeof Set === 'undefined') {
+  console.log('using global Set from babel-polyfill');
+} else {
+  console.log('using native Set');
+}
+
 require('babel-polyfill');
 
 function validateFakeComponent(prop, isRequired) {
