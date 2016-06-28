@@ -25,8 +25,9 @@ function error(propName, componentName, property, condition) {
   ].join(''));
 }
 
-module.exports = function (props, propName, componentName) {
+function setType(props, propName, componentName) {
   var s = props[propName];
+  if (s == null) return; // null or undefined
 
   if (typeof s.size !== 'number') {
     return error(propName, componentName, 'size', 'a number');
@@ -35,7 +36,17 @@ module.exports = function (props, propName, componentName) {
   for (var i = 0; i < methods.length; i++) {
     var method = methods[i];
     if (typeof s[method] !== 'function') {
-      return errorText(propName, componentName, method, 'a function');
+      return error(propName, componentName, method, 'a function');
     }
   }
 };
+
+setType.isRequired = function (props, propName, componentName) {
+  if (props[propName] == null) { // null or undefined
+    return new Error('Required prop `' + propName + '` was not specified in ' + componentName + '.');
+  }
+
+  return setType(props, propName, componentName);
+}
+
+module.exports = setType;
