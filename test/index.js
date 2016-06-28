@@ -1,6 +1,6 @@
 var tape = require('tape');
 var ES6Set = require('es6-set');
-var Immutable = require('Immutable');
+var Immutable = require('immutable');
 var setValidator = require('../src/index');
 
 if (typeof Set === 'undefined') {
