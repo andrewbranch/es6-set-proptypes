@@ -2,14 +2,8 @@ var tape = require('tape');
 var ES6Set = require('es6-set');
 var Immutable = require('immutable');
 var setValidator = require('../src/index');
-
-if (typeof Set === 'undefined') {
-  console.log('using global Set from babel-polyfill');
-} else {
-  console.log('using native Set');
-}
-
-require('babel-polyfill');
+var NativeSet = global.Set;
+delete global.Set;
 
 function validateFakeComponent(prop, isRequired) {
   return (isRequired ? setValidator.isRequired : setValidator)({ someProp: prop }, 'someProp', 'FakeComponent');
@@ -24,8 +18,10 @@ function fails(t, nonSet, variety, isRequired) {
 }
 
 tape('Set PropTypes validator', function (t) {
-  t.plan(6);
-  passes(t, new Set([0]), 'native or babel-polyfilled Set');
+  t.plan(7);
+  passes(t, new NativeSet([0]), 'native Set');
+  require('babel-polyfill');
+  passes(t, new Set([]), 'babel-polyfill Set');
   passes(t, new ES6Set([1, 2]), 'es6-set polyfilled Set');
   passes(t, Immutable.Set([]), 'Immutable.Set');
   passes(t, undefined, 'undefined without isRequired');
